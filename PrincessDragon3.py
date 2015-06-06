@@ -62,9 +62,9 @@ class Engine(object):
 class Death(Scene):
     quips = [
         "You died.  You kinda suck at this.",
-        "Your mom would be proud...if she were smarter.",
-        "Such a loser.",
-        "I have a small puppy that's better at this."
+        "You died. Your mom would be proud...if she were smarter.",
+        "You died, you are such a loser.",
+        "You died. I have a small puppy that's better at this."
     ]
 
     def enter(self):
@@ -86,8 +86,8 @@ class Door(Scene):
         print " Leila has to go open the door and start her quest. She walks to the door."
         print " Leila (you) stands in front of the door"
         print " Leila can:"
-        #print " a)push"
-        #print " b)pull"
+        print " a)push"
+        print " b)pull"
         
         #door = Choice('door', 'Try to use the door.', 'You try to use the door, but you failed.', 'death')
 
@@ -95,7 +95,10 @@ class Door(Scene):
         pull = Choice('pull', 'Try to pull the door.', 'The door handle breaks because you pulled it too hard.\n You fall and break your head. You are dead!','death') 
 
         action = Menu([push, pull]).prompt()
+        #print action
         return action
+ 
+        
 
 
 #Nicoles
@@ -108,6 +111,7 @@ class Forest(Scene):
         print "Leila needs to find the bandits tower."
         print "Leila can get directions if she..."
         print "(a) asks a swallow, (b) asks a deer, (c) asks a rabbit"
+        
         guess = raw_input("> ")
         
         if guess == "a":
@@ -127,11 +131,11 @@ class Forest(Scene):
 
 class BanditsTower(Scene):
     def enter(self):
-            print "Leila, Valium. and Pyro need to escape the bandits by pulling up the drawbridge behind them."
+            print "Leila, Valium and Pyro need to escape the bandits."
             print "Leila can:"
-            print "a) Get Pyro to throw fireballs at them"
-            print "b) Push them one by one into the moat"
-            print "c) Surrender"
+            print "1 Get Pyro to throw fireballs at them"
+            print "2 Push them one by one into the moat"
+            print "3 Surrender"
              
             action = raw_input("> ")
              
@@ -158,12 +162,15 @@ class BanditsTower(Scene):
 class Moat(Scene):
 
     def enter(self):
+        
         print "Leila, Valium, and Pyro need to escape the narwhals in the moat."
         print "Options \nLeila can: \n(a) get Pyro to throw fireballs at them \n(b) swim faster than the narwals \n(c) play dead"
+
         guess = raw_input()
+
         if guess in ['a','A']:
             print "Pyro's fire is doused under water"
-            return 'castle'
+            return 'death'
         elif guess in ['b','B']:
             print "The narwhals catch them"
             return 'death'
@@ -182,10 +189,10 @@ class Castle(Scene):
     def enter(self):
 
         print "Leila, Valium and Pyro are back in the castle."
-        print "They need to get ready for their /'Heroes Welcome' but Valium is asleep. Leila can: "
+        print "They need to get ready for their 'Heroes Welcome' but Valium is asleep. Leila can: "
         print "(a) kiss him, (b) asks her matron to wake him up, (c) get Pyro to wake him up"
         print "Don't you just hate it when you are in bed with three different women" 
-        print "and the least attractive one of them says: /'Save it for me.'Jim Carrey"
+        print "and the least attractive one of them says: 'Save it for me.'Jim Carrey"
         guess = raw_input("> ")
         
         if guess == "a":
