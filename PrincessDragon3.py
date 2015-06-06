@@ -33,12 +33,8 @@ class Death(Scene):
     ]
 
     def enter(self):
-<<<<<<< HEAD
         print Death.quips[randint(0, len(self.quips)-1)]
         pause = raw_input("Press enter to continue")
-=======
-        print Death.quips[randint(0, len(self.quips) - 1)]
->>>>>>> added moat code
         exit(1)
 
 
@@ -61,23 +57,44 @@ class Door(Scene):
         action = raw_input("> ")
 
         if action == "a":
-            print "Great! You did it! Go on and get that rescue that lovely idiot."
+            print "Great! You did it! Go on and get to rescue that lovely idiot."
             return 'forest'
 
         elif action == "b":
             print "The door handle broken because you pull it too hard."
-            print "You fall and break your head. You are death!"
+            print "You fall and break your head. You are dead!"
             return 'death'
         else:
             print "DOES NOT COMPUTE!"
             return 'door'
 
 
-class Forest(Scene):
-    def enter(self):
-        print "You are in the forest"
-        return 'banditstower'
+#Nicoles
 
+class Forest(Scene):
+ 
+    def enter(self):
+
+        print "You are in the forest"
+        print "Leila needs to find the bandits tower."
+        print "Leila can get directions if she..."
+        print "(a) asks a swallow, (b) asks a deer, (c) asks a rabbit"
+        guess = raw_input("> ")
+        
+        if guess == "a":
+            print "Wrong choice! The swallow dies."
+            return 'death'
+        elif guess == "b":
+            print "Wrong answer! The deer runs off."
+            return 'death'
+        elif guess == "c":
+            print "Great job! That rabbits dynamite...You really should get yourself a bunny."
+            print "The rabbit takes Leila and Pyro down a rabbit hole to the bandits tower."
+            return 'banditstower'
+        else:
+            print "Not a valid option. Choose a, b or c"
+            return 'forest'
+     
 
 class BanditsTower(Scene):
     def enter(self):
@@ -129,11 +146,31 @@ class Moat(Scene):
             return 'moat'
 
 
-class Castle(Scene):
-    def enter(self):
-        print "You are in the castle"
-        return 'finished'
+#Nicoles
 
+class Castle(Scene):
+ 
+    def enter(self):
+
+        print "Leila, Valium and Pyro are back in the castle."
+        print "They need to get ready for their /'Heroes Welcome' but Valium is asleep. Leila can: "
+        print "(a) kiss him, (b) asks her matron to wake him up, (c) get Pyro to wake him up"
+        print "Don't you just hate it when you are in bed with three different women" 
+        print "and the least attractive one of them says: /'Save it for me.'Jim Carrey"
+        guess = raw_input("> ")
+        
+        if guess == "a":
+            print "She has to do over her lipstick and is late to the party."
+            return 'death'
+        elif guess == "b":
+            print "Valium wakes up."
+            return 'finished'
+        elif guess == "c":
+            print "Pyro sets Valium on fire."
+            return 'death'
+        else:
+            print "Not a valid option. Choose a, b or c"
+            return 'castle'
 
 class Finished(Scene):
     def enter(self):
