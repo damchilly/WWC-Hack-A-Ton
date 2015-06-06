@@ -1,6 +1,41 @@
 ﻿from sys import exit
 from random import randint
 
+class Choice(object):
+    def __init__(self, keyword, description, resulttext, result):
+        self.keyword = keyword
+        self.description = description
+        self.resulttext = resulttext
+        self.result = result
+
+    def choose(self):
+        print(self.resulttext)
+        return self.result
+
+
+class Menu(object):
+    def __init__(self, options):
+        self.option_menu = {}
+        for option in options:
+            self.option_menu[option.keyword] = option
+
+    def prompt(self):
+        for keyword, option in self.option_menu.items():
+            print keyword, ':', option.description
+
+        acceptable = self.option_menu.keys()
+        choice = None
+        while choice is None:
+            choice = raw_input()
+            if choice not in acceptable:
+                print "Sorry, try again."
+                choice = None
+        chosen = self.option_menu[choice]
+        print chosen.resulttext
+        return chosen.result
+
+
+
 
 class Scene(object):
     def enter(self):
@@ -51,22 +86,16 @@ class Door(Scene):
         print " Leila has to go open the door and start her quest. She walks to the door."
         print " Leila (you) stands in front of the door"
         print " Leila can:"
-        print " a)push"
-        print " b)pull"
+        #print " a)push"
+        #print " b)pull"
+        
+        #door = Choice('door', 'Try to use the door.', 'You try to use the door, but you failed.', 'death')
 
-        action = raw_input("> ")
+        push = Choice('push', 'Try to push the door.', 'Great! You did it! Go on and get to rescue that lovely idiot.','forest')
+        pull = Choice('pull', 'Try to pull the door.', 'The door handle breaks because you pulled it too hard.\n You fall and break your head. You are dead!','death') 
 
-        if action == "a":
-            print "Great! You did it! Go on and get to rescue that lovely idiot."
-            return 'forest'
-
-        elif action == "b":
-            print "The door handle broken because you pull it too hard."
-            print "You fall and break your head. You are dead!"
-            return 'death'
-        else:
-            print "DOES NOT COMPUTE!"
-            return 'door'
+        action = Menu([push, pull]).prompt()
+        return action
 
 
 #Nicoles
@@ -100,9 +129,9 @@ class BanditsTower(Scene):
     def enter(self):
             print "Leila, Valium. and Pyro need to escape the bandits by pulling up the drawbridge behind them."
             print "Leila can:"
-            print "1 get Pyro to throw fireballs at them"
-            print "2 push them one by one into the moat"
-            print "3 surrender"
+            print "a) Get Pyro to throw fireballs at them"
+            print "b) Push them one by one into the moat"
+            print "c) Surrender"
              
             action = raw_input("> ")
              
