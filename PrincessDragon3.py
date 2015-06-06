@@ -49,15 +49,17 @@ class Door(Scene):
         print " getting kidnapped by a bunch of bandits, and now Leila has to rescue him one and only true love."
         print " Leila has to go open the door and start her quest. She walks to the door."
         print " Leila (you) stands in front of the door"
-        print " Write the action to perform > push or pull"
+        print " Leila can:"
+        print " a)push"
+        print " b)pull"
 
         action = raw_input("> ")
 
-        if action == "push":
+        if action == "a":
             print "Great! You did it! Go on and get that rescue that lovely idiot."
             return 'forest'
 
-        elif action == "pull":
+        elif action == "b":
             print "The door handle broken because you pull it too hard."
             print "You fall and break your head. You are death!"
             return 'death'
@@ -77,9 +79,29 @@ class BanditsTower(Scene):
            return 'moat'
 
 class Moat(Scene):
+    
     def enter(self):
-           print "You are in the moat"
-           return 'castle'
+        
+        print "Leila, Valium and Pyro need to escape the narwhals in the moat"
+        print "Leila can:"
+        print "a) Get Pyro to throw fireballs to them"
+        print "b) Swim faster than the narwhals"
+        print "c) Play dead"
+
+        action = raw_input(">")
+        
+        if action == 'a':
+            print "Pyro's fire is doused under water"
+            return 'death'
+        elif action == 'b':
+            print "The narwhals catch them"
+            return 'death'
+        elif action == 'c':
+            print "The narwhals swim past them and the 3 escape"
+            return 'castle'
+        else:
+            print "DOES NOT COMPUTE!"
+            return 'moat'
 
 class Castle(Scene):
     def enter(self):
