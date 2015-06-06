@@ -46,18 +46,22 @@ class Scene(object):
 class Engine(object):
     def __init__(self, scene_map):
         self.scene_map = scene_map
+        self.deathcounter = 0
 
     def play(self):
         current_scene = self.scene_map.opening_scene()
-        last_scene = self.scene_map.next_scene('finished')
+        last_scene = self.scene_map.next_scene('quit')
 
         while current_scene != last_scene:
             next_scene_name = current_scene.enter()
+            if next_scene_name == "death":
+                self.deathcounter += 1
             current_scene = self.scene_map.next_scene(next_scene_name)
 
         # be sure to print out the last scene
         current_scene.enter()
-
+        print "You died", self.deathcounter, "times."   
+        raw_input("Press enter to continue.")
 
 class Death(Scene):
     quips = [
@@ -69,8 +73,25 @@ class Death(Scene):
 
     def enter(self):
         print Death.quips[randint(0, len(self.quips)-1)]
-        pause = raw_input("Press enter to continue")
-        exit(1)
+
+        action = raw_input("Try again? Press Y or N ")
+
+        if action in ["Y", "y"]:
+            print "You have just been gifted another life!"
+            return 'door'
+
+        if action in ["N", "n"]:
+            print "Oh, that's too bad...loser."
+            return 'quit'
+
+        else:
+            print "Sorry! That's not a valid option."
+            return 'death'
+
+class Quit(Scene):
+    def enter(self):
+        pass
+        
 
 
 # Diana’s
@@ -86,19 +107,13 @@ class Door(Scene):
         print " Leila has to go open the door and start her quest. She walks to the door."
         print " Leila (you) stands in front of the door"
         print " Leila can:"
-        print " a)push"
-        print " b)pull"
-        
-        #door = Choice('door', 'Try to use the door.', 'You try to use the door, but you failed.', 'death')
 
         push = Choice('push', 'Try to push the door.', 'Great! You did it! Go on and get to rescue that lovely idiot.','forest')
         pull = Choice('pull', 'Try to pull the door.', 'The door handle breaks because you pulled it too hard.\n You fall and break your head. You are dead!','death') 
 
         action = Menu([push, pull]).prompt()
-        #print action
         return action
  
-        
 
 
 #Nicoles
@@ -110,23 +125,26 @@ class Forest(Scene):
         print "You are in the forest"
         print "Leila needs to find the bandits tower."
         print "Leila can get directions if she..."
-        print "(a) asks a swallow, (b) asks a deer, (c) asks a rabbit"
-        
+        print "1 asks a swallow"
+        print "2 asks a deer"
+        print "3 asks a rabbit"
+
         guess = raw_input("> ")
         
-        if guess == "a":
+        if guess == "1":
             print "Wrong choice! The swallow dies."
             return 'death'
-        elif guess == "b":
+        elif guess == "2":
             print "Wrong answer! The deer runs off."
             return 'death'
-        elif guess == "c":
-            print "Great job! That rabbits dynamite...You really should get yourself a bunny."
+        elif guess == "3":
+            print "Great job! That rabbit's dynamite...You really should get yourself a bunny."
             print "The rabbit takes Leila and Pyro down a rabbit hole to the bandits tower."
             return 'banditstower'
         else:
-            print "Not a valid option. Choose a, b or c"
-            return 'forest'
+                print "Sorry! That's not a valid option."
+                return 'forest'
+    
      
 
 class BanditsTower(Scene):
@@ -141,7 +159,7 @@ class BanditsTower(Scene):
              
             if action == "1":
                 print "Pyro sets Valium on fire by sneezing."
-                pause = raw_input(" read")
+                pause = raw_input()
                 return 'death'
                         
              
@@ -155,7 +173,7 @@ class BanditsTower(Scene):
                 return 'death'
                         
             else:
-                print "DOES NOT COMPUTE!"
+                print "Sorry! That's not a valid option."
                 return 'banditstower'
 
 
@@ -164,22 +182,23 @@ class Moat(Scene):
     def enter(self):
         
         print "Leila, Valium, and Pyro need to escape the narwhals in the moat."
-        print "Options \nLeila can: \n(a) get Pyro to throw fireballs at them \n(b) swim faster than the narwals \n(c) play dead"
-
-        guess = raw_input()
-
-        if guess in ['a','A']:
+        print "Leila's options are:" 
+        print "1 get Pyro to throw fireballs at them"
+        print "2 swim faster than the narwals"
+        print "3 play dead"
+        action = raw_input("> " )
+        if action == "1":
             print "Pyro's fire is doused under water"
             return 'death'
-        elif guess in ['b','B']:
+        elif action == "2":
             print "The narwhals catch them"
             return 'death'
-        elif guess in ['c', 'C']:
+        elif action == "3":
             print "The narwhals swim past them and the 3 escape."
             return 'castle'
         else:
-            print "Oops! Something bad happened!"
-            return 'moat'
+                print "Sorry! That's not a valid option."
+                return 'moat'
 
 
 #Nicoles
@@ -189,29 +208,44 @@ class Castle(Scene):
     def enter(self):
 
         print "Leila, Valium and Pyro are back in the castle."
-        print "They need to get ready for their 'Heroes Welcome' but Valium is asleep. Leila can: "
-        print "(a) kiss him, (b) asks her matron to wake him up, (c) get Pyro to wake him up"
+        print "They need to get ready for their /'Heroes Welcome' but Valium is asleep. Leila can: "
+        print "1 kiss him"
+        print "2 asks her matron to wake him up"
+        print "3 get Pyro to wake him up"
         print "Don't you just hate it when you are in bed with three different women" 
         print "and the least attractive one of them says: 'Save it for me.'Jim Carrey"
-        guess = raw_input("> ")
+        action = raw_input("> ")
         
-        if guess == "a":
+        if action == "1":
             print "She has to do over her lipstick and is late to the party."
             return 'death'
-        elif guess == "b":
+        elif action == "2":
             print "Valium wakes up."
             return 'finished'
-        elif guess == "c":
+        elif action == "3":
             print "Pyro sets Valium on fire."
             return 'death'
         else:
-            print "Not a valid option. Choose a, b or c"
+            print "Sorry! That's not a valid option."
             return 'castle'
 
 class Finished(Scene):
     def enter(self):
         print "You won! Good job."
-        return 'finished'
+
+        action = raw_input("Play again? Press Y or N")
+
+        if action == "Y":
+            print "You have just been gifted another life!"
+            return 'door'
+
+        if action == "N":
+            print "Oh, that's too bad...loser."
+            return 'quit'
+
+        else:
+            print "Sorry! That's not a valid option."
+            return 'finished'
 
 
 class Map(object):
@@ -223,6 +257,7 @@ class Map(object):
         'castle': Castle(),
         'death': Death(),
         'finished': Finished(),
+        'quit': Quit(),
     }
 
     def __init__(self, start_scene):
@@ -239,4 +274,3 @@ class Map(object):
 a_map = Map('door')
 a_game = Engine(a_map)
 a_game.play()
-_ = raw_input("Press enter to continue")
