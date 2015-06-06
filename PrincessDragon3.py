@@ -34,6 +34,7 @@ class Death(Scene):
 
     def enter(self):
         print Death.quips[randint(0, len(self.quips)-1)]
+        pause = raw_input("Press enter to continue")
         exit(1)
 
 # Diana’s
@@ -75,8 +76,32 @@ class Forest(Scene):
 
 class BanditsTower(Scene):
     def enter(self):
-           print "You are in the Bandits Tower"
-           return 'moat'
+            print "Leila, Valium. and Pyro need to escape the bandits by pulling up the drawbridge behind them."
+            print "Leila can:"
+            print "1 get Pyro to throw fireballs at them"
+            print "2 push them one by one into the moat"
+            print "3 surrender"
+             
+            action = raw_input("> ")
+             
+            if action == "1":
+                print "Pyro sets Valium on fire by sneezing."
+                pause = raw_input(" read")
+                return 'death'
+                        
+             
+            elif action == "2":
+                print "They all fall into the moat around bandit's tower while fighting"
+                return 'moat'
+                        
+
+            elif action == "3":
+                print "They all die since he forgot his Allegra"
+                return 'death'
+                        
+            else:
+                print "DOES NOT COMPUTE!"
+                return 'banditstower'
 
 class Moat(Scene):
     
@@ -139,3 +164,4 @@ class Map(object):
 a_map = Map('door')
 a_game = Engine(a_map)
 a_game.play()
+_ = raw_input("Press enter to continue")
