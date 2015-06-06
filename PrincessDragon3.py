@@ -1,14 +1,14 @@
 ﻿from sys import exit
 from random import randint
 
-class Scene(object):
 
+class Scene(object):
     def enter(self):
         print "This scene is not yet configured. Subclass it and implement enter()."
         exit(1)
 
-class Engine(object):
 
+class Engine(object):
     def __init__(self, scene_map):
         self.scene_map = scene_map
 
@@ -23,24 +23,28 @@ class Engine(object):
         # be sure to print out the last scene
         current_scene.enter()
 
-class Death(Scene):
 
+class Death(Scene):
     quips = [
         "You died.  You kinda suck at this.",
-         "Your mom would be proud...if she were smarter.",
-         "Such a luser.",
-         "I have a small puppy that's better at this."
+        "Your mom would be proud...if she were smarter.",
+        "Such a loser.",
+        "I have a small puppy that's better at this."
     ]
 
     def enter(self):
+<<<<<<< HEAD
         print Death.quips[randint(0, len(self.quips)-1)]
         pause = raw_input("Press enter to continue")
+=======
+        print Death.quips[randint(0, len(self.quips) - 1)]
+>>>>>>> added moat code
         exit(1)
+
 
 # Diana’s
 
 class Door(Scene):
-
     def enter(self):
         print "This is a love story..."
         print " A lovely young princess named Leila fell in love with a dashing young dumbass named Valium."
@@ -71,8 +75,9 @@ class Door(Scene):
 
 class Forest(Scene):
     def enter(self):
-           print "You are in the forest"
-           return 'banditstower'
+        print "You are in the forest"
+        return 'banditstower'
+
 
 class BanditsTower(Scene):
     def enter(self):
@@ -103,35 +108,31 @@ class BanditsTower(Scene):
                 print "DOES NOT COMPUTE!"
                 return 'banditstower'
 
-class Moat(Scene):
-    
-    def enter(self):
-        
-        print "Leila, Valium and Pyro need to escape the narwhals in the moat"
-        print "Leila can:"
-        print "a) Get Pyro to throw fireballs to them"
-        print "b) Swim faster than the narwhals"
-        print "c) Play dead"
 
-        action = raw_input(">")
-        
-        if action == 'a':
+class Moat(Scene):
+
+    def enter(self):
+        print "Leila, Valium, and Pyro need to escape the narwhals in the moat."
+        print "Options \nLeila can: \n(a) get Pyro to throw fireballs at them \n(b) swim faster than the narwals \n(c) play dead"
+        guess = raw_input()
+        if guess in ['a','A']:
             print "Pyro's fire is doused under water"
-            return 'death'
-        elif action == 'b':
+            return 'castle'
+        elif guess in ['b','B']:
             print "The narwhals catch them"
             return 'death'
-        elif action == 'c':
-            print "The narwhals swim past them and the 3 escape"
+        elif guess in ['c', 'C']:
+            print "The narwhals swim past them and the 3 escape."
             return 'castle'
         else:
-            print "DOES NOT COMPUTE!"
+            print "Oops! Something bad happened!"
             return 'moat'
+
 
 class Castle(Scene):
     def enter(self):
-           print "You are in the castle"
-           return 'finished'
+        print "You are in the castle"
+        return 'finished'
 
 
 class Finished(Scene):
@@ -139,23 +140,24 @@ class Finished(Scene):
         print "You won! Good job."
         return 'finished'
 
+
 class Map(object):
     scenes = {
-    'door': Door(),
-    'forest': Forest(),
-    'banditstower': BanditsTower(),
-    'moat': Moat(),
-    'castle': Castle(),
-    'death': Death(),
-    'finished': Finished(),
+        'door': Door(),
+        'forest': Forest(),
+        'banditstower': BanditsTower(),
+        'moat': Moat(),
+        'castle': Castle(),
+        'death': Death(),
+        'finished': Finished(),
     }
 
     def __init__(self, start_scene):
-                self.start_scene = start_scene
+        self.start_scene = start_scene
 
     def next_scene(self, scene_name):
-         val = Map.scenes.get(scene_name)
-         return val
+        val = Map.scenes.get(scene_name)
+        return val
 
     def opening_scene(self):
         return self.next_scene(self.start_scene)
